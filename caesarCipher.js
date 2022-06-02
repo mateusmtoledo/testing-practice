@@ -10,15 +10,14 @@ function isLetter(char) {
 
 function shiftChar(char, num) {
     const charCode = char.charCodeAt(0);
-    if(!isLetter(char)) return char;
     const min = isUpperCase(char) ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
-    const max = isUpperCase(char) ? 'Z'.charCodeAt(0) : 'z'.charCodeAt(0);
+    const max = min + 25;
     let newCharCode = charCode + num;
     while (newCharCode > max) {
-        newCharCode = newCharCode - max + min - 1;
+        newCharCode = newCharCode - 26;
     }
     while (newCharCode < min) {
-        newCharCode = newCharCode - min + max + 1;
+        newCharCode = newCharCode + 26;
     }
     return String.fromCharCode(newCharCode);
 }
@@ -27,7 +26,7 @@ function caesarCipher(string, num) {
     const arr = string.split('');
     const newArr = [];
     arr.forEach(char => {
-        newArr.push(shiftChar(char, num));
+        newArr.push(isLetter(char) ? shiftChar(char, num) : char);
     });
     return newArr.join('');
 }
